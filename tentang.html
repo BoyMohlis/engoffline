@@ -72,6 +72,12 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
   terhubung dari GoogleDrive ke GitHub. Aplikasi ini awal saya buat untuk kebutuhan pribadi, namun entah kenapa dipikir2 daripada hanya bermanfaat untuk diri-sendiri kenapa tidak berbagi saja kepada orang juga! gitu dah bro ....
   Semoga bermanfaat, terimakasih.</p>
 <p style="color:green;">Wassalamu'alaikum Warohmatullahi Wabarokatuh.</p>
+  <!-- tampilan counter -->
+  <div style="padding: 10px; background-color: #e3f2fd; border: 1px solid #90caf9;">
+  Total Login: <span id="loginCountDisplay">0</span>
+  <button onclick="resetLoginCount()" style="margin-left: 10px;">Reset</button>
+</div>
+
 </center><br>
             </div>
           </div> <!-- akhir isi --> 
@@ -154,5 +160,27 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
       // });
   });
   </script>
+  <script>
+  // Tampilkan jumlah login dari localStorage
+  document.addEventListener("DOMContentLoaded", () => {
+    const count = localStorage.getItem("loginCount") || 0;
+    const display = document.getElementById("loginCountDisplay");
+    if (display) {
+      display.textContent = count;
+    }
+  });
+
+  // Fungsi reset counter
+  function resetLoginCount() {
+    if (confirm("Yakin ingin mereset jumlah login?")) {
+      localStorage.setItem("loginCount", 0);
+      const display = document.getElementById("loginCountDisplay");
+      if (display) {
+        display.textContent = 0;
+      }
+    }
+  }
+</script>
+
 </body>
 </html>
