@@ -98,6 +98,11 @@ button:hover {
             // Redirect ke halaman tujuan
             alert("Login berhasil!");
             window.location.href = "menu.html";
+            // Tambahkan di dalam blok if login berhasil
+let count = localStorage.getItem("loginCount");
+count = count ? parseInt(count) + 1 : 1;
+localStorage.setItem("loginCount", count);
+
         } else {
             alert("Username atau password salah. Silakan coba lagi.");
         }
