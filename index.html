@@ -79,35 +79,36 @@ button:hover {
         </form>
     </div>
 
-    <script>
-        //https://www.ansoriweb.com/2020/03/javascript-game.html
-         document.addEventListener("DOMContentLoaded", function() {
-    const loginForm = document.getElementById("loginForm");
+    
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const loginForm = document.getElementById("loginForm");
 
-    loginForm.addEventListener("submit", function(event) {
-        event.preventDefault();
+  loginForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+    if (username === "Bismillah" && password === "Alhamdulillah") {
+      sessionStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("username", username);
 
-        // Dummy authentication (replace this with your actual authentication logic)
-        if (username === "Bismillah" && password === "Alhamdulillah") {
-            // Simpan informasi login di session storage
-            sessionStorage.setItem("isLoggedIn", "true");
+      let count = localStorage.getItem("loginCount");
+      count = count ? parseInt(count) + 1 : 1;
+      localStorage.setItem("loginCount", count);
 
-            // Redirect ke halaman tujuan
-            alert("Login berhasil!");
-            window.location.href = "menu.html";
-            // Tambahkan di dalam blok if login berhasil
-let count = localStorage.getItem("loginCount");
-count = count ? parseInt(count) + 1 : 1;
-localStorage.setItem("loginCount", count);
+      alert("Login berhasil!");
+      window.location.href = "menu.html";
+    } else {
+      alert("Username atau password salah. Silakan coba lagi.");
+    }
+  });
 
-        } else {
-            alert("Username atau password salah. Silakan coba lagi.");
-        }
-    });
+  if (sessionStorage.getItem("isLoggedIn")) {
+    window.location.href = "menu.html";
+  }
 });
-    </script>
+</script>
+
 </body>
 </html>
