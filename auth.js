@@ -2,21 +2,31 @@ if (!sessionStorage.getItem("isLoggedIn")) {
   window.location.href = "index.html";
 }
 
-let timeout;
 const timeoutLimit = 5 * 60 * 1000; // 5 menit
+let lastActivity = Date.now();
+localStorage.setItem("lastActivity", lastActivity);
 
-function resetTimer() {
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
+// Update aktivitas saat ada interaksi pengguna
+function updateActivity() {
+  lastActivity = Date.now();
+  localStorage.setItem("lastActivity", lastActivity);
+}
+
+// Jalankan interval untuk cek aktivitas
+setInterval(() => {
+  const now = Date.now();
+  const last = parseInt(localStorage.getItem("lastActivity") || now);
+  if (now - last > timeoutLimit) {
     alert("Logout otomatis karena tidak aktif.");
     sessionStorage.clear();
     window.location.href = "index.html";
-  }, timeoutLimit);
-}
+  }
+}, 10000); // cek setiap 10 detik
 
-document.addEventListener("DOMContentLoaded", resetTimer);
-document.onmousemove = resetTimer;
-document.onkeypress = resetTimer;
-document.onclick = resetTimer;
-document.onscroll = resetTimer;
-document.onkeydown = resetTimer;
+// Daftar aktivitas pengguna yang dianggap sebagai interaksi
+document.addEventListener("DOMContentLoaded", updateActivity);
+document.onmousemove = updateActivity;
+document.onkeypress = updateActivity;
+document.onclick = updateActivity;
+document.onscroll = updateActivity;
+document.onkeydown = updateActivity;
