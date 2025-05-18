@@ -89,47 +89,33 @@ button:hover {
     </div>
 
 <script>
-  const USERNAME = "Bismillah";
-  const PASSWORD_HASH = "176231fe2f3c2510b6a96c88fc80b9a37e0148c4652d6947255f57b4ad5ecf50";
+document.addEventListener("DOMContentLoaded", function() {
+  const loginForm = document.getElementById("loginForm");
 
-  async function hashPassword(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-    return hashHex;
-  }
+  loginForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("loginForm");
+    if (username === "Bismillah" && password === "Alhamdulillah") {
+      sessionStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("username", username);
 
-    loginForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+      let count = localStorage.getItem("loginCount");
+      count = count ? parseInt(count) + 1 : 1;
+      localStorage.setItem("loginCount", count);
 
-      const hashedPassword = await hashPassword(password);
-
-      if (username === USERNAME && hashedPassword === PASSWORD_HASH) {
-        sessionStorage.setItem("isLoggedIn", "true");
-        sessionStorage.setItem("username", username);
-
-        let count = localStorage.getItem("loginCount");
-        count = count ? parseInt(count) + 1 : 1;
-        localStorage.setItem("loginCount", count);
-
-        alert("Login berhasil!");
-        window.location.href = "menu.html";
-      } else {
-        alert("Username atau password salah. Silakan coba lagi.");
-      }
-    });
-
-    if (sessionStorage.getItem("isLoggedIn")) {
+      alert("Login berhasil!");
       window.location.href = "menu.html";
+    } else {
+      alert("Username atau password salah. Silakan coba lagi.");
     }
   });
+
+  if (sessionStorage.getItem("isLoggedIn")) {
+    window.location.href = "menu.html";
+  }
+});
 </script>
 
 </body>
